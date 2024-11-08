@@ -52,7 +52,7 @@ import org.apache.xml.security.binding.xmldsig.CanonicalizationMethodType;
 import org.apache.xml.security.binding.xmldsig.SignatureMethodType;
 import org.apache.xml.security.binding.xmldsig.SignatureType;
 import org.apache.xml.security.binding.xmldsig.SignedInfoType;
-import org.apache.xml.security.binding.xmldsigmore.RSAPSSParamsType;
+import org.apache.xml.security.binding.xmldsig.pss.RSAPSSParamsType;
 import org.apache.xml.security.exceptions.XMLSecurityException;
 import org.apache.xml.security.signature.XMLSignature;
 import org.apache.xml.security.stax.ext.AbstractInputSecurityHeaderHandler;

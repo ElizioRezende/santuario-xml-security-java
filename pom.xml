@@ -27,7 +27,7 @@
 
     <groupId>org.apache.santuario</groupId>
     <artifactId>xmlsec</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>4.0.4-ANDROID</version>
     <packaging>bundle</packaging>
 
     <name>Apache XML Security for Java</name>
@@ -237,6 +237,13 @@
             <version>${jmh.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--
+        <dependency>
+            <groupId>org.apache.santuario</groupId>
+            <artifactId>xmlsec</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -652,19 +659,6 @@
         </plugins>
     </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>clirr-maven-plugin</artifactId>
-                <version>${clirr.version}</version>
-                <configuration>
-                    <minSeverity>${minSeverity}</minSeverity>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <profiles>
         <profile>
             <id>fastinstall</id>
@@ -678,17 +672,6 @@
             <properties>
                 <pmd.skip>true</pmd.skip>
             </properties>
-        </profile>
-        <profile>
-            <id>bouncycastle</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.bouncycastle</groupId>
-                    <artifactId>bcprov-jdk18on</artifactId>
-                    <version>${bcprov.version}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
         </profile>
     </profiles>
 </project>

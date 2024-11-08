@@ -22,11 +22,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.Key;
 import java.security.Provider;
 import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Base64;
 
 import javax.crypto.SecretKey;
 
@@ -70,6 +73,8 @@ import org.w3c.dom.Text;
  * signature. </li></ul>
  */
 public final class XMLSignature extends SignatureElementProxy {
+
+    public static boolean isAndroid = false;
 
     /** MAC - Required HMAC-SHA1 */
     public static final String ALGO_ID_MAC_HMAC_SHA1 =

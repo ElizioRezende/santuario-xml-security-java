@@ -26,6 +26,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.security.AccessController;
@@ -43,6 +45,7 @@ import org.apache.xml.security.c14n.InvalidCanonicalizerException;
 import org.apache.xml.security.parser.XMLParser;
 import org.apache.xml.security.parser.XMLParserException;
 import org.apache.xml.security.parser.XMLParserImpl;
+import org.apache.xml.security.signature.XMLSignature;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -515,18 +518,66 @@ public final class XMLUtils {
     }
 
     public static String encodeToString(byte[] bytes) {
-        if (ignoreLineBreaks) {
-            return Base64.getEncoder().encodeToString(bytes);
+        if (!XMLSignature.isAndroid) {
+            if (ignoreLineBreaks) {
+                return Base64.getEncoder().encodeToString(bytes);
+            }
+            return Base64.getMimeEncoder().encodeToString(bytes);
+        } else {
+            return encodeToStringAndroid(bytes);
         }
-        return Base64.getMimeEncoder().encodeToString(bytes);
+    }
+
+    public static String encodeToStringAndroid(byte[] value) {
+        try {
+            Class<?> clazz = Class.forName("android.util.Base64");
+
+            Method method = clazz.getMethod("encodeToString", byte[].class, int.class);
+
+            return (String) method.invoke(null, value, 0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static byte[] decode(String encodedString) {
-        return Base64.getMimeDecoder().decode(encodedString);
+        if (!XMLSignature.isAndroid) {
+            return Base64.getMimeDecoder().decode(encodedString);
+        } else {
+            return decodeAndroid(encodedString);
+        }
     }
 
     public static byte[] decode(byte[] encodedBytes) {
-        return Base64.getMimeDecoder().decode(encodedBytes);
+        if (!XMLSignature.isAndroid) {
+            return Base64.getMimeDecoder().decode(encodedBytes);
+        } else {
+            return decodeAndroid(encodedBytes);
+        }
+    }
+
+    public static byte[] decodeAndroid(String value) {
+        try {
+            Class<?> clazz = Class.forName("android.util.Base64");
+
+            Method method = clazz.getMethod("decode", String.class, int.class);
+
+            return (byte[]) method.invoke(null, value, 0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static byte[] decodeAndroid(byte[] value) {
+        try {
+            Class<?> clazz = Class.forName("android.util.Base64");
+
+            Method method = clazz.getMethod("decode", byte[].class, int.class);
+
+            return (byte[]) method.invoke(null, value, 0);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static boolean isIgnoreLineBreaks() {
