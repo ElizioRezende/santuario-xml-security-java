@@ -113,13 +113,13 @@ public class KeyInfo extends ElementProxy {
     public KeyInfo(Document doc) {
         super(doc);
         addReturnToSelf();
-
+/*
         String prefix = ElementProxy.getDefaultPrefix(this.getBaseNamespace());
         if (prefix != null && prefix.length() > 0) {
             getElement().setAttributeNS(Constants.NamespaceSpecNS, "xmlns:" + prefix,
                                         this.getBaseNamespace());
         }
-
+*/
     }
 
     /**
